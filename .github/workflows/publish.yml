@@ -1,0 +1,27 @@
+name: lint&tests
+
+on: push
+
+jobs:
+  test:
+    name: 🧪 Lint and test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 👍 Checkout
+        uses: actions/checkout@v3
+
+      - name: ❇️ Setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: 📥 Install Dependencies
+        run: npm install
+
+      - name: 💅 Lint
+        run: npm run lint
+
+      - name: 🧪 Unit Tests
+        run: npm run test
