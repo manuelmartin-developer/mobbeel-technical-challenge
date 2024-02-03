@@ -1,79 +1,126 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+
+import { useThemeStore } from "./store/theme.store";
+import { DocumentSide } from "./services/mobbscan.service";
+import { useDetectedFilesStore } from "./store/detectedFiles.store";
+
+import styles from "./App.module.scss";
+
 import Layout from "./components/layout/Layout";
 import Stepper from "./components/stepper/Stepper";
 import Camera from "./components/media/Camera";
 import Button from "./components/button/Button";
-import { useDetectedFilesStore } from "./store/detectedFiles";
-import { DocumentSide } from "./services/mobbscan.service";
+import { useStepperStore } from "./store/stepper.store";
 
 interface StepsProps {
+  /**
+   * The step number
+   * @type {number}
+   * @memberof StepsProps
+   * @required
+   * @example
+   * step: 0
+   * */
   step: number;
+  /**
+   * The title of the step
+   * @type {string}
+   * @memberof StepsProps
+   * @required
+   * @example
+   * title: "Welcome"
+   * */
   title: string;
+  /**
+   * The description of the step
+   * @type {string | React.ReactNode}
+   * @memberof StepsProps
+   * @required
+   * @example
+   * description: "Please take a picture of the front of your document"
+   * */
   description: string | React.ReactNode;
 }
 
 const App = () => {
   // Store states
   const { frontDocument, backDocument } = useDetectedFilesStore();
+
   // Constants
   const steps: StepsProps[] = [
     {
       step: 0,
       title: "Welcome​",
       description: (
-        <div>
-          <p>Welcome to the document scanner app</p>
+        <>
+          <h4>Welcome to the document scanner app</h4>
           <p>In this app you will be able to scan your documents</p>
           <p>Click next to start the process</p>
-        </div>
+        </>
       ),
     },
     {
       step: 2,
       title: "Front document",
-      description: "Please take a picture of the front of your document",
+      description:
+        "Please, select the capture mode for detecting the front of your document",
     },
     {
       step: 3,
       title: "Back document",
-      description: "Please take a picture of the back of your document",
+      description:
+        "Please, select the capture mode for detecting the back of your document",
     },
     {
       step: 4,
       title: "Finish",
-      description: "You have completed the process",
+      description: (
+        <>
+          <h4>You have completed the process</h4>
+          <p>Your document has been scanned successfully</p>
+          <p>
+            Check the images below and if something is wrong, you can go click
+            on retake button to start the process again
+          </p>
+        </>
+      ),
     },
   ];
 
-  //   Component states
-  const [activeStep, setActiveStep] = useState<number>(0);
+  // Store states
+  const { theme, setTheme } = useThemeStore();
+  const { activeStep, setActiveStep } = useStepperStore();
 
   // Component Lifecycle
   useEffect(() => {
-    const prefersDarkMode = window.matchMedia(
-      "(prefers-color-scheme: dark)",
-    ).matches;
-    if (prefersDarkMode) {
-      document.body.setAttribute("data-theme", "dark");
+    const theme = window.localStorage.getItem("theme");
+    if (!theme) {
+      const prefersDarkMode = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
+      if (prefersDarkMode) {
+        setTheme("dark");
+      }
+      return;
     }
-  }, []);
+    setTheme(theme as "light" | "dark");
+  }, [setTheme]);
 
-  console.log(activeStep, frontDocument, backDocument);
+  useEffect(() => {
+    window.localStorage.setItem("theme", theme);
+    document.body.setAttribute("data-theme", theme);
+  }, [theme]);
+
   return (
     <Layout>
-      <Stepper activeStep={activeStep} setActiveStep={setActiveStep}>
+      <Stepper>
         {steps.map((step) => (
-          <div key={step.step}>
-            <span>{step.title}</span>
-          </div>
+          <article key={step.step}>
+            <div>{step.title}</div>
+          </article>
         ))}
       </Stepper>
-      <Button
-        text="Next"
-        onClick={() => setActiveStep(activeStep + 1)}
-        disabled={activeStep === steps.length - 1}
-      />
-      <div>
+      <section className={styles.content}>
         {steps[activeStep].description}
         {activeStep === 1 && <Camera side={DocumentSide.FRONT} />}
         {activeStep === 2 && <Camera side={DocumentSide.BACK} />}
@@ -89,7 +136,19 @@ const App = () => {
             />
           </>
         )}
-      </div>
+      </section>
+      {activeStep < 3 && (
+        <section className={styles.actions}>
+          <Button
+            text="Next"
+            onClick={() => setActiveStep(activeStep + 1)}
+            disabled={
+              (activeStep === 1 && !frontDocument) ||
+              (activeStep === 2 && !backDocument)
+            }
+          />
+        </section>
+      )}
     </Layout>
   );
 };

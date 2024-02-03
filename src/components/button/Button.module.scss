@@ -6,7 +6,7 @@
   color: #fff;
   border: none;
   box-shadow: var(--shadow);
-  padding: 0.5rem 1rem;
+  padding: 0.2rem 0.7rem;
   border-radius: 8px;
   position: relative;
   text-align: center;
@@ -18,7 +18,11 @@
     opacity: 0.5;
     pointer-events: none;
   }
+  &_icon {
+    padding: 0.8rem;
+    font-size: 1.7rem;
+  }
   &:active {
-    top: 2px;
+    top: 1px;
   }
 }
