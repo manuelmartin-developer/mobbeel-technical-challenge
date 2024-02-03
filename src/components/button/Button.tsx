@@ -42,6 +42,36 @@ interface ButtonProps {
    *
    * */
   iconButton?: boolean;
+
+  /**
+   * The width of the button
+   * @type {string}
+   * @memberof ButtonProps
+   * @example
+   * width="100px"
+   *
+   * */
+  width?: string;
+
+  /**
+   * Whether the button is selected
+   * @type {boolean}
+   * @memberof ButtonProps
+   * @example
+   * selected={true}
+   *
+   * */
+  height?: string;
+
+  /**
+   * Whether the button is selected
+   * @type {boolean}
+   * @memberof ButtonProps
+   * @example
+   * selected={true}
+   *
+   * */
+  selected?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -49,15 +79,19 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   disabled,
   iconButton,
+  width,
+  height,
+  selected,
 }) => {
   return (
     <button
       data-testid="button"
-      className={`${styles.button} ${disabled ? styles.button_disabled : ""} ${iconButton ? styles.button_icon : ""}
+      className={`${styles.button} ${disabled ? styles.button_disabled : ""} ${iconButton ? styles.button_icon : ""} ${selected ? styles.button_selected : ""}
       `}
       role="button"
       onClick={onClick}
       aria-disabled={disabled}
+      style={{ width, height }}
     >
       <span>{text}</span>
     </button>

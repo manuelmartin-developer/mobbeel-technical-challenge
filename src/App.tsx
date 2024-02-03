@@ -11,6 +11,7 @@ import Stepper from "./components/stepper/Stepper";
 import Camera from "./components/media/Camera";
 import Button from "./components/button/Button";
 import { useStepperStore } from "./store/stepper.store";
+import { TbRefresh } from "react-icons/tb";
 
 interface StepsProps {
   /**
@@ -90,6 +91,14 @@ const App = () => {
   // Store states
   const { theme, setTheme } = useThemeStore();
   const { activeStep, setActiveStep } = useStepperStore();
+  const { setFrontDocument, setBackDocument } = useDetectedFilesStore();
+
+  // Methods
+  const resetProcess = () => {
+    setActiveStep(0);
+    setFrontDocument(null);
+    setBackDocument(null);
+  };
 
   // Component Lifecycle
   useEffect(() => {
@@ -125,7 +134,8 @@ const App = () => {
         {activeStep === 1 && <Camera side={DocumentSide.FRONT} />}
         {activeStep === 2 && <Camera side={DocumentSide.BACK} />}
         {activeStep === 3 && frontDocument && backDocument && (
-          <>
+          <article className={styles.documents}>
+            <h4>Document detected</h4>
             <img
               src={`data:image/png;base64,${frontDocument}`}
               alt="Front document"
@@ -134,7 +144,8 @@ const App = () => {
               src={`data:image/png;base64,${backDocument}`}
               alt="Back document"
             />
-          </>
+            <Button text={<TbRefresh />} onClick={resetProcess} iconButton />
+          </article>
         )}
       </section>
       {activeStep < 3 && (
@@ -146,6 +157,8 @@ const App = () => {
               (activeStep === 1 && !frontDocument) ||
               (activeStep === 2 && !backDocument)
             }
+            width="300px"
+            height="40px"
           />
         </section>
       )}
