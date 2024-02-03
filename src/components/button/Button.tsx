@@ -11,6 +11,7 @@ interface ButtonProps {
    *
    * */
   text: string | React.ReactNode;
+
   /**
    * The function to call when the button is clicked
    * @type {() => void}
@@ -21,6 +22,7 @@ interface ButtonProps {
    *
    * */
   onClick: () => void;
+
   /**
    * Whether the button is disabled
    * @type {boolean}
@@ -30,13 +32,29 @@ interface ButtonProps {
    *
    * */
   disabled?: boolean;
+
+  /**
+   * Whether the button is an icon button
+   * @type {boolean}
+   * @memberof ButtonProps
+   * @example
+   * iconButton={true}
+   *
+   * */
+  iconButton?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ text, onClick, disabled }) => {
+const Button: React.FC<ButtonProps> = ({
+  text,
+  onClick,
+  disabled,
+  iconButton,
+}) => {
   return (
     <button
       data-testid="button"
-      className={`${styles.button} ${disabled ? styles.button_disabled : ""}`}
+      className={`${styles.button} ${disabled ? styles.button_disabled : ""} ${iconButton ? styles.button_icon : ""}
+      `}
       role="button"
       onClick={onClick}
       aria-disabled={disabled}

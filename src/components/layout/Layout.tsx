@@ -19,15 +19,15 @@ type Props = {
 
 const Layout: React.FC<Props> = ({ children }) => {
   return (
-    <main className={styles.main}>
-      <Header />
+    <>
       <ToastContainer
         position="bottom-right"
         autoClose={3000}
         draggablePercent={60}
       />
-      {children}
-    </main>
+      <Header />
+      <main className={styles.main}>{children}</main>
+    </>
   );
 };
 
