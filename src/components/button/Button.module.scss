@@ -1,0 +1,24 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--accent);
+  color: #fff;
+  border: none;
+  box-shadow: var(--shadow);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  &_disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  &:active {
+    top: 2px;
+  }
+}
