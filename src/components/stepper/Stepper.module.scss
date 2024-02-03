@@ -1,0 +1,61 @@
+.stepper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 4rem auto;
+  padding: 0 20px;
+  height: 50px;
+  border-radius: 10px;
+  position: relative;
+  z-index: 1;
+  &__step {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    background-color: var(--text-primary);
+    font-size: 12px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px var(--text-primary);
+    transition:
+      background-color 0.3s ease,
+      box-shadow 0.3s ease-in-out;
+    border: 2px solid var(--background);
+    cursor: pointer;
+    & > span {
+      position: absolute;
+      bottom: 150%;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      text-align: center;
+    }
+    &_active {
+      background-color: var(--accent);
+      box-shadow: var(--shadow);
+    }
+    &_done {
+      background-color: #a5be00;
+      box-shadow: var(--shadow);
+    }
+    &_disabled {
+      background-color: #f5f5f5;
+    }
+  }
+  &__line {
+    position: absolute;
+    z-index: 1;
+    width: calc(100% - 50px);
+    height: 2px;
+    background-color: var(--text-primary);
+    top: 50%;
+    left: 25px;
+    transform: translateY(-50%);
+  }
+}
