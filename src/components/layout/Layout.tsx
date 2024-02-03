@@ -24,6 +24,8 @@ const Layout: React.FC<Props> = ({ children }) => {
         position="bottom-right"
         autoClose={3000}
         draggablePercent={60}
+        closeButton={true}
+        theme="colored"
       />
       <Header />
       <main className={styles.main}>{children}</main>

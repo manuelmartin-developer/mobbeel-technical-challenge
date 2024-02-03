@@ -4,7 +4,7 @@
   align-items: center;
   background-color: var(--accent);
   color: #fff;
-  border: none;
+  border: 2px solid transparent;
   box-shadow: var(--shadow);
   padding: 0.2rem 0.7rem;
   border-radius: 8px;
@@ -14,6 +14,11 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  margin: auto;
+  opacity: 1;
+  transition:
+    border 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
   &_disabled {
     opacity: 0.5;
     pointer-events: none;
@@ -21,6 +26,9 @@
   &_icon {
     padding: 0.8rem;
     font-size: 1.7rem;
+  }
+  &_selected {
+    border: 2px solid var(--border);
   }
   &:active {
     top: 1px;

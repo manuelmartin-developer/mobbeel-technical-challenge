@@ -199,19 +199,23 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
     };
   }, []);
 
-  useEffect(() => {
-    if (detectingMode === DetectingMode.FILE) {
-      inputRef.current!.click();
-    }
-  }, [detectingMode]);
-
   return (
     <section className={styles.camera}>
       <article className={styles.camera__selector}>
         <Button
           text={<TbUpload />}
-          onClick={() => setDetectingMode(DetectingMode.FILE)}
+          onClick={() => {
+            setDetectingMode(DetectingMode.FILE);
+            inputRef.current!.click();
+          }}
           iconButton
+          selected={detectingMode === DetectingMode.FILE}
+          disabled={
+            (activeStep === 1 && frontDocument) ||
+            (activeStep === 2 && backDocument)
+              ? true
+              : false
+          }
         />
         {isCameraAvailable && (
           <>
@@ -219,11 +223,25 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
               text={<TbCamera />}
               onClick={() => setDetectingMode(DetectingMode.PHOTO)}
               iconButton
+              selected={detectingMode === DetectingMode.PHOTO}
+              disabled={
+                (activeStep === 1 && frontDocument) ||
+                (activeStep === 2 && backDocument)
+                  ? true
+                  : false
+              }
             />
             <Button
               text={<TbVideo />}
               onClick={() => setDetectingMode(DetectingMode.VIDEO)}
               iconButton
+              selected={detectingMode === DetectingMode.VIDEO}
+              disabled={
+                (activeStep === 1 && frontDocument) ||
+                (activeStep === 2 && backDocument)
+                  ? true
+                  : false
+              }
             />
           </>
         )}
@@ -286,24 +304,17 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
               iconButton
             />
           )}
-        {(detectingMode !== DetectingMode.FILE && videoRef.current?.paused) ||
-          (((detectingMode === DetectingMode.FILE &&
-            activeStep === 1 &&
-            frontDocument) ||
-            (detectingMode === DetectingMode.FILE &&
-              activeStep === 2 &&
-              backDocument)) && (
-            <Button
-              text={<TbRefresh />}
-              onClick={() => {
-                activeStep === 1
-                  ? setFrontDocument(null)
-                  : setBackDocument(null);
-                videoRef.current!.play();
-              }}
-              iconButton
-            />
-          ))}
+        {((activeStep === 1 && frontDocument) ||
+          (activeStep === 2 && backDocument)) && (
+          <Button
+            text={<TbRefresh />}
+            onClick={() => {
+              activeStep === 1 ? setFrontDocument(null) : setBackDocument(null);
+              videoRef.current && videoRef.current!.play();
+            }}
+            iconButton
+          />
+        )}
       </article>
       <input
         style={{ display: "none" }}
