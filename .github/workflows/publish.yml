@@ -1,4 +1,4 @@
-name: lint&tests
+name: format&lint&tests
 
 on: push
 
@@ -20,7 +20,10 @@ jobs:
       - name: 📥 Install Dependencies
         run: npm install
 
-      - name: 💅 Lint
+      - name: 💅 Format
+        run: npm run format
+
+      - name: 🕵️ Lint
         run: npm run lint
 
       - name: 🧪 Unit Tests

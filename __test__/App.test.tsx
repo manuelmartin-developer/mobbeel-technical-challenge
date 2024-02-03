@@ -1,4 +1,4 @@
-import React from "react";
+import "@testing-library/jest-dom";
 import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 
@@ -14,14 +14,26 @@ Object.defineProperty(window, "matchMedia", {
     removeListener: vi.fn(),
     addEventListener: vi.fn(),
     removeEventListener: vi.fn(),
-    dispatchEvent: vi.fn()
-  }))
+    dispatchEvent: vi.fn(),
+  })),
 });
 
 // Test if the App component renders
 describe("App", () => {
   it("renders App component", () => {
     render(<App />);
-    expect(screen.getByText("Test")).toBeInTheDocument();
+    expect(screen.getByText("Technical Challenge")).toBeInTheDocument();
+  });
+
+  it("renders Welcome step", () => {
+    render(<App />);
+    expect(screen.getByText("Welcome​")).toBeInTheDocument();
+  });
+
+  it("renders Welcome description", () => {
+    render(<App />);
+    expect(
+      screen.getByText("Welcome to the document scanner app"),
+    ).toBeInTheDocument();
   });
 });

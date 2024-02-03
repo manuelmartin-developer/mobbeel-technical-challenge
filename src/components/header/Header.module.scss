@@ -1,0 +1,20 @@
+.header {
+  width: 100%;
+  height: 50px;
+  background-color: var(--background);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.1rem;
+  padding: 1rem;
+  &__logo {
+    width: 80px;
+    height: auto;
+    object-fit: cover;
+    filter: brightness(var(--filter-brightness)) invert(var(--filter-invert));
+  }
+  &__title {
+    font-weight: 500;
+    font-size: 14px;
+  }
+}
