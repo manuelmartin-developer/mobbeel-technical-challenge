@@ -1,18 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+
 import styles from "./Camera.module.scss";
+
 import { toast } from "react-toastify";
-import {
-  mediaStreamConstraints,
-  handleDetectCameraDocument,
-  handleDetectFileDocument,
-  DetectingMode,
-} from "../../services/media.service";
-import { useDetectedFilesStore } from "../../store/detectedFiles.store";
-import {
-  DetectedImageQuality,
-  DocumentSide,
-} from "../../services/mobbscan.service";
-import Button from "../button/Button";
 import {
   TbUpload,
   TbCamera,
@@ -20,7 +10,22 @@ import {
   TbCapture,
   TbRefresh,
 } from "react-icons/tb";
+
+import {
+  mediaStreamConstraints,
+  handleDetectCameraDocument,
+  handleDetectFileDocument,
+  DetectingMode,
+} from "../../services/media.service";
+import {
+  DetectedImageQuality,
+  DocumentSide,
+} from "../../services/mobbscan.service";
+
+import { useDetectedFilesStore } from "../../store/detectedFiles.store";
 import { useStepperStore } from "../../store/stepper.store";
+
+import Button from "../button/Button";
 
 interface CameraProps {
   /**
@@ -56,9 +61,11 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
   //   Methods
   const handleCaptureFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
+
     const file = e.target.files[0];
     toast.loading("Detecting document...", { toastId: "detecting" });
     const response = await handleDetectFileDocument(file, side);
+
     if (
       response?.imageDocumentDetected &&
       response?.imageQuality === DetectedImageQuality.VALID
@@ -69,6 +76,7 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
         type: "success",
         autoClose: 3000,
       });
+
       side === DocumentSide.FRONT
         ? setFrontDocument(response?.imageDocumentDetected)
         : setBackDocument(response?.imageDocumentDetected);
@@ -83,6 +91,54 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
       autoClose: 5000,
     });
   };
+
+  const handleCaptutePhoto = async () => {
+    toast.loading("Detecting document...", { toastId: "detectingPhoto" });
+    const response = await handleDetectCameraDocument(
+      videoRef,
+      canvasRef,
+      side,
+      DetectingMode.PHOTO,
+    );
+    if (
+      response?.imageDocumentDetected &&
+      response?.imageQuality === DetectedImageQuality.VALID
+    ) {
+      toast.update("detectingPhoto", {
+        isLoading: false,
+        render: "Document detected",
+        type: "success",
+        autoClose: 3000,
+      });
+
+      side === DocumentSide.FRONT
+        ? setFrontDocument(response?.imageDocumentDetected)
+        : setBackDocument(response?.imageDocumentDetected);
+      return;
+    }
+    if (
+      response?.imageDocumentDetected &&
+      response?.imageQuality === DetectedImageQuality.NOT_VALID
+    ) {
+      videoRef.current!.play();
+      toast.update("detectingPhoto", {
+        isLoading: false,
+        render: "Document detected but quality is not valid. Please try again",
+        type: "info",
+        autoClose: 5000,
+      });
+      return;
+    }
+
+    videoRef.current!.play();
+    toast.update("detectingPhoto", {
+      isLoading: false,
+      render: "Document not detected",
+      type: "error",
+      autoClose: 5000,
+    });
+  };
+
   const handleCaptureVideo = () => {
     toast.loading("Detecting document...", { toastId: "detectingVideo" });
     captureInterval.current = setInterval(async () => {
@@ -124,54 +180,16 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
       }, 20000);
   };
 
-  const handleCaptutePhoto = async () => {
-    toast.loading("Detecting document...", { toastId: "detectingPhoto" });
-    const response = await handleDetectCameraDocument(
-      videoRef,
-      canvasRef,
-      side,
-      DetectingMode.PHOTO,
-    );
-    if (
-      response?.imageDocumentDetected &&
-      response?.imageQuality === DetectedImageQuality.VALID
-    ) {
-      toast.update("detectingPhoto", {
-        isLoading: false,
-        render: "Document detected",
-        type: "success",
-        autoClose: 3000,
-      });
-      side === DocumentSide.FRONT
-        ? setFrontDocument(response?.imageDocumentDetected)
-        : setBackDocument(response?.imageDocumentDetected);
-      return;
-    }
-    if (
-      response?.imageDocumentDetected &&
-      response?.imageQuality === DetectedImageQuality.NOT_VALID
-    ) {
-      videoRef.current!.play();
-      toast.update("detectingPhoto", {
-        isLoading: false,
-        render: "Document detected but quality is not valid. Please try again",
-        type: "info",
-        autoClose: 5000,
-      });
-      return;
-    }
-    videoRef.current!.play();
-    toast.update("detectingPhoto", {
-      isLoading: false,
-      render: "Document not detected",
-      type: "error",
-      autoClose: 5000,
-    });
-  };
-
   //   Component Lifecycle
   useEffect(() => {
-    if (!videoRef.current || detectingMode === DetectingMode.FILE) return;
+    if (
+      !videoRef.current ||
+      !detectingMode ||
+      detectingMode === DetectingMode.FILE ||
+      !isCameraAvailable
+    ) {
+      return;
+    }
 
     navigator.mediaDevices
       .getUserMedia({
@@ -183,11 +201,12 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
       .catch((error) => {
         toast.error(`Error accessing camera: ${error.message}`);
       });
-  }, [videoRef, detectingMode]);
+  }, [videoRef, detectingMode, isCameraAvailable]);
 
   useEffect(() => {
     return () => {
       captureInterval.current && clearInterval(captureInterval.current);
+
       navigator.mediaDevices
         .getUserMedia({ video: true })
         .then((stream) => {
@@ -212,67 +231,63 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
           selected={detectingMode === DetectingMode.FILE}
           disabled={
             (activeStep === 1 && frontDocument) ||
+            (activeStep === 2 && backDocument) ||
+            !isCameraAvailable
+              ? true
+              : false
+          }
+        />
+        <Button
+          text={<TbCamera />}
+          onClick={() => setDetectingMode(DetectingMode.PHOTO)}
+          iconButton
+          selected={detectingMode === DetectingMode.PHOTO}
+          disabled={
+            (activeStep === 1 && frontDocument) ||
+            (activeStep === 2 && backDocument) ||
+            !isCameraAvailable
+              ? true
+              : false
+          }
+        />
+        <Button
+          text={<TbVideo />}
+          onClick={() => setDetectingMode(DetectingMode.VIDEO)}
+          iconButton
+          selected={detectingMode === DetectingMode.VIDEO}
+          disabled={
+            (activeStep === 1 && frontDocument) ||
             (activeStep === 2 && backDocument)
               ? true
               : false
           }
         />
-        {isCameraAvailable && (
-          <>
-            <Button
-              text={<TbCamera />}
-              onClick={() => setDetectingMode(DetectingMode.PHOTO)}
-              iconButton
-              selected={detectingMode === DetectingMode.PHOTO}
-              disabled={
-                (activeStep === 1 && frontDocument) ||
-                (activeStep === 2 && backDocument)
-                  ? true
-                  : false
-              }
-            />
-            <Button
-              text={<TbVideo />}
-              onClick={() => setDetectingMode(DetectingMode.VIDEO)}
-              iconButton
-              selected={detectingMode === DetectingMode.VIDEO}
-              disabled={
-                (activeStep === 1 && frontDocument) ||
-                (activeStep === 2 && backDocument)
-                  ? true
-                  : false
-              }
-            />
-          </>
-        )}
       </article>
-      {detectingMode &&
-        (detectingMode === DetectingMode.VIDEO ||
-          detectingMode === DetectingMode.PHOTO) && (
-          <>
-            <canvas
-              ref={canvasRef}
-              width={1280}
-              height={720}
-              className={styles.canvas}
-              style={{ display: "none" }}
-            ></canvas>
-            <video
-              style={{
-                display:
-                  (activeStep === 1 && !frontDocument) ||
-                  (activeStep === 2 && !backDocument)
-                    ? "block"
-                    : "none",
-              }}
-              className={styles.camera__video}
-              crossOrigin="anonymous"
-              ref={videoRef}
-              autoPlay
-              muted
-            ></video>
-          </>
-        )}
+      {detectingMode && detectingMode !== DetectingMode.FILE && (
+        <>
+          <canvas
+            ref={canvasRef}
+            width={1280}
+            height={720}
+            className={styles.canvas}
+            style={{ display: "none" }}
+          ></canvas>
+          <video
+            style={{
+              display:
+                (activeStep === 1 && !frontDocument) ||
+                (activeStep === 2 && !backDocument)
+                  ? "block"
+                  : "none",
+            }}
+            className={styles.camera__video}
+            crossOrigin="anonymous"
+            ref={videoRef}
+            autoPlay
+            muted
+          ></video>
+        </>
+      )}
       {activeStep === 1 && frontDocument && (
         <img
           src={`data:image/png;base64,${frontDocument}`}

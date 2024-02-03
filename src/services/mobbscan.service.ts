@@ -75,6 +75,12 @@ export interface DetectDocumentResponse {
   imageQualityScore?: number;
 }
 
+/**
+ *
+ * @param file
+ * @param side
+ * @returns Promise<DetectDocumentResponse>
+ */
 export const documentDetect = async (
   file: File,
   side: DocumentSide,

@@ -1,6 +1,8 @@
-import { useThemeStore } from "../../store/theme.store";
 import { CiLight, CiDark } from "react-icons/ci";
+
 import styles from "./Switch.module.scss";
+
+import { useThemeStore } from "../../store/theme.store";
 
 const ThemeSwitch = () => {
   // Store states
@@ -8,6 +10,7 @@ const ThemeSwitch = () => {
 
   return (
     <button
+      data-testid="theme-switch"
       role="switch"
       aria-checked={theme === "dark"}
       aria-label="Switch theme"

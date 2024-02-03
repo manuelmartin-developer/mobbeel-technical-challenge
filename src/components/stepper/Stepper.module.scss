@@ -63,4 +63,23 @@
     left: 25px;
     transform: translateY(-50%);
   }
+  @media screen and (min-width: 768px) {
+    &__step {
+      width: 35px;
+      height: 35px;
+      font-size: 14px;
+      &_done {
+        width: 30px;
+        height: 30px;
+      }
+      &_active {
+        width: 40px;
+        height: 40px;
+      }
+      &_disabled {
+        width: 25px;
+        height: 25px;
+      }
+    }
+  }
 }

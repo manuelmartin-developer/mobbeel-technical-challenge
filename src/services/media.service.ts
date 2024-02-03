@@ -24,14 +24,32 @@ export const mediaStreamConstraints: MediaStreamConstraints = {
   audio: false,
 };
 
+/**
+ * Handles the detection of a document
+ * @param file The file to detect
+ * @param side The side of the document
+ * @returns Promise<DetectDocumentResponse | undefined>
+ * */
 export const handleDetectFileDocument = async (
   file: File,
   side: DocumentSide,
 ): Promise<DetectDocumentResponse | undefined> => {
-  const response = await documentDetect(file, side);
-  return response;
+  try {
+    const response = await documentDetect(file, side);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
+/**
+ * Handles the detection of a document from the camera
+ * @param videoRef The reference to the video element
+ * @param canvasRef The reference to the canvas element
+ * @param side The side of the document
+ * @param detectingMode The detecting mode
+ * @returns Promise<DetectDocumentResponse | undefined>
+ * */
 export const handleDetectCameraDocument = async (
   videoRef: React.RefObject<HTMLVideoElement>,
   canvasRef: React.RefObject<HTMLCanvasElement>,
@@ -41,8 +59,6 @@ export const handleDetectCameraDocument = async (
   if (!videoRef.current || !canvasRef.current) return;
 
   const context = canvasRef.current.getContext("2d");
-
-  // Capture a high quality image from the video
   context!.drawImage(
     videoRef.current,
     0,
@@ -57,6 +73,10 @@ export const handleDetectCameraDocument = async (
   const file = new File([blob], `${side}_document.jpeg`, {
     type: "image/jpeg",
   });
-  const response = await documentDetect(file, side);
-  return response;
+  try {
+    const response = await documentDetect(file, side);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
 };

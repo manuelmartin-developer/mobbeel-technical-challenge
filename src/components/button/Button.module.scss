@@ -33,4 +33,11 @@
   &:active {
     top: 1px;
   }
+  @media screen and (min-width: 768px) {
+    padding: 0.5rem 1rem;
+    &_icon {
+      padding: 1rem;
+      font-size: 2rem;
+    }
+  }
 }

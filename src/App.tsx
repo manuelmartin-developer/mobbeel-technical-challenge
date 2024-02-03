@@ -50,7 +50,7 @@ const App = () => {
   // Constants
   const steps: StepsProps[] = [
     {
-      step: 0,
+      step: 1,
       title: "Welcome​",
       description: (
         <>
@@ -63,14 +63,22 @@ const App = () => {
     {
       step: 2,
       title: "Front document",
-      description:
-        "Please, select the capture mode for detecting the front of your document",
+      description: (
+        <p>
+          Please, select the capture mode for detecting the front of your
+          document
+        </p>
+      ),
     },
     {
       step: 3,
       title: "Back document",
-      description:
-        "Please, select the capture mode for detecting the back of your document",
+      description: (
+        <p>
+          Please, select the capture mode for detecting the back of your
+          document
+        </p>
+      ),
     },
     {
       step: 4,
