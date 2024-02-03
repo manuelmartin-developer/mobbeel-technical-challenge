@@ -16,7 +16,6 @@ export const mediaStreamConstraints = {
 export const handleDetectDocument = async (
   videoRef: React.RefObject<HTMLVideoElement>,
   canvasRef: React.RefObject<HTMLCanvasElement>,
-  setFile: React.Dispatch<React.SetStateAction<File | null>>,
   side: DocumentSide,
   detectingMode: "image" | "video",
 ): Promise<DetectDocumentResponse | undefined> => {
@@ -37,7 +36,6 @@ export const handleDetectDocument = async (
   const file = new File([blob], `${side}_document.jpeg`, {
     type: "image/jpeg",
   });
-  detectingMode === "image" && setFile(file);
   const response = await documentDetect(file, side);
   return response;
 };

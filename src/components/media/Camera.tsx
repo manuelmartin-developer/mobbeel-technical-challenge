@@ -32,7 +32,6 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
   const { setFrontDocument, setBackDocument } = useDetectedFilesStore();
 
   //   Component states
-  const [file, setFile] = useState<File | null>(null);
   const [facingMode, setFacingMode] = useState<"user" | "environment">(
     "environment",
   );
@@ -47,7 +46,6 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
       const response = await handleDetectDocument(
         videoRef,
         canvasRef,
-        setFile,
         side,
         detectingMode,
       );
@@ -84,7 +82,6 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
     const response = await handleDetectDocument(
       videoRef,
       canvasRef,
-      setFile,
       side,
       detectingMode,
     );
@@ -147,7 +144,6 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
       <button onClick={() => setDetectingMode("video")}>Video</button>
       <button
         onClick={() => {
-          setFile(null);
           side === "front" ? setFrontDocument(null) : setBackDocument(null);
           videoRef.current!.play();
         }}
