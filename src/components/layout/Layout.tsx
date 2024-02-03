@@ -1,7 +1,9 @@
-import styles from "./Layout.module.scss";
-import Header from "../header/Header";
 import { ToastContainer } from "react-toastify";
+
+import styles from "./Layout.module.scss";
 import "react-toastify/dist/ReactToastify.css";
+
+import Header from "../header/Header";
 
 type Props = {
   /**

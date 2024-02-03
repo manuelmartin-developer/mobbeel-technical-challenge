@@ -1,5 +1,7 @@
 import React from "react";
+
 import styles from "./Stepper.module.scss";
+
 import { useStepperStore } from "../../store/stepper.store";
 
 interface StepperProps {

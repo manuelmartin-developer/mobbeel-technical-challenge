@@ -1,9 +1,10 @@
 import ThemeSwitch from "../switch/Switch";
+
 import styles from "./Header.module.scss";
 
 const Header: React.FC = () => {
   return (
-    <header className={styles.header}>
+    <header className={styles.header} data-testid="header">
       <img
         className={styles.header__logo}
         src="/assets/mobbeel-logo.png"
