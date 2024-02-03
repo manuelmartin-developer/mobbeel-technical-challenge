@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import Layout from "./components/layout/Layout";
 import Stepper from "./components/stepper/Stepper";
-import Camera, { DocumentSide } from "./components/media/Camera";
+import Camera from "./components/media/Camera";
 import Button from "./components/button/Button";
 import { useDetectedFilesStore } from "./store/detectedFiles";
+import { DocumentSide } from "./services/mobbscan.service";
 
 interface StepsProps {
   step: number;

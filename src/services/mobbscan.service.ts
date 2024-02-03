@@ -1,4 +1,7 @@
-import { DocumentSide } from "../components/media/Camera";
+export enum DocumentSide {
+  FRONT = "front",
+  BACK = "back",
+}
 
 export interface DetectDocumentResponse {
   code: string;

@@ -1,5 +1,8 @@
-import { DocumentSide } from "../components/media/Camera";
-import { DetectDocumentResponse, documentDetect } from "./mobbscan.service";
+import {
+  DetectDocumentResponse,
+  DocumentSide,
+  documentDetect,
+} from "./mobbscan.service";
 
 export const mediaStreamConstraints = {
   video: {

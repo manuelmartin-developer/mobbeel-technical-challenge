@@ -6,11 +6,7 @@ import {
   handleDetectDocument,
 } from "../../services/media.service";
 import { useDetectedFilesStore } from "../../store/detectedFiles";
-
-export enum DocumentSide {
-  FRONT = "front",
-  BACK = "back",
-}
+import { DocumentSide } from "../../services/mobbscan.service";
 
 interface CameraProps {
   side: DocumentSide;
