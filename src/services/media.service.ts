@@ -4,27 +4,45 @@ import {
   documentDetect,
 } from "./mobbscan.service";
 
-export const mediaStreamConstraints = {
+export enum DetectingMode {
+  FILE = "file",
+  PHOTO = "photo",
+  VIDEO = "video",
+}
+
+export const mediaStreamConstraints: MediaStreamConstraints = {
   video: {
+    facingMode: "environment",
     advanced: [
       {
-        width: { min: 1280, ideal: 1920, max: 1920 },
-        height: { min: 720, ideal: 1080, max: 1080 },
+        width: { min: 640, ideal: 1280, max: 1920 },
+        height: { min: 360, ideal: 720, max: 1080 },
+        frameRate: 30,
       },
     ],
   },
   audio: false,
 };
 
-export const handleDetectDocument = async (
+export const handleDetectFileDocument = async (
+  file: File,
+  side: DocumentSide,
+): Promise<DetectDocumentResponse | undefined> => {
+  const response = await documentDetect(file, side);
+  return response;
+};
+
+export const handleDetectCameraDocument = async (
   videoRef: React.RefObject<HTMLVideoElement>,
   canvasRef: React.RefObject<HTMLCanvasElement>,
   side: DocumentSide,
-  detectingMode: "image" | "video",
+  detectingMode: DetectingMode,
 ): Promise<DetectDocumentResponse | undefined> => {
   if (!videoRef.current || !canvasRef.current) return;
 
   const context = canvasRef.current.getContext("2d");
+
+  // Capture a high quality image from the video
   context!.drawImage(
     videoRef.current,
     0,
@@ -33,7 +51,7 @@ export const handleDetectDocument = async (
     canvasRef.current.height,
   );
 
-  detectingMode === "image" && videoRef.current.pause();
+  detectingMode === DetectingMode.PHOTO && videoRef.current.pause();
   const dataURL = canvasRef.current.toDataURL("image/jpeg");
   const blob = await fetch(dataURL).then((res) => res.blob());
   const file = new File([blob], `${side}_document.jpeg`, {

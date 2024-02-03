@@ -7,14 +7,18 @@
   align-items: center;
   gap: 0.1rem;
   padding: 1rem;
+  transition: background-color 0.3s ease-in-out;
   &__logo {
     width: 80px;
     height: auto;
     object-fit: cover;
     filter: brightness(var(--filter-brightness)) invert(var(--filter-invert));
+    transition: filter 0.3s ease-in-out;
   }
   &__title {
     font-weight: 500;
-    font-size: 14px;
+    font-size: 16px;
+    position: relative;
+    top: 1px;
   }
 }
