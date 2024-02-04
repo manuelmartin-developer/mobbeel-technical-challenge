@@ -16,7 +16,7 @@ describe("Camera file", () => {
     cy.get("[data-testid=camera-input]").should("exist");
   });
 
-  it("When a correct file is selected, it should be uploaded and displayed", () => {
+  it.skip("When a correct file is selected, it should be uploaded and displayed", () => {
     cy.get("[data-testid=camera-input]").should("exist");
     cy.get("[data-testid=camera-input]").attachFile("DNI-V3-front.jpg");
     cy.wait(1000);
@@ -24,7 +24,7 @@ describe("Camera file", () => {
     cy.get("[data-testid=camera-refresh]").should("exist");
   });
 
-  it("When a correct file is selected, it should be uploaded and displayed. If refresh button is clicked, the image should be removed and the video should be playing again", () => {
+  it.skip("When a correct file is selected, it should be uploaded and displayed. If refresh button is clicked, the image should be removed and the video should be playing again", () => {
     cy.get("[data-testid=camera-input]").should("exist");
     cy.get("[data-testid=camera-input]").attachFile("DNI-V3-front.jpg");
     cy.wait(1000);

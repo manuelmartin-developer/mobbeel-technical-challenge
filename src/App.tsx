@@ -86,7 +86,6 @@ const App = () => {
       description: (
         <>
           <h4>You have completed the process</h4>
-          <p>Your document has been scanned successfully</p>
           <p>
             Check the images below and if something is wrong, you can go click
             on retake button to start the process again

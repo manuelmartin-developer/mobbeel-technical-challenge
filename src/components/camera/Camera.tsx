@@ -345,12 +345,7 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
       </article>
       <input
         data-testid="camera-input"
-        style={{
-          height: 0,
-          width: 0,
-          visibility: "hidden",
-          overflow: "hidden",
-        }}
+        className={styles.camera__input}
         ref={inputRef}
         type="file"
         accept="image/*"
