@@ -141,18 +141,25 @@ const App = () => {
         {activeStep === 1 && <Camera side={DocumentSide.FRONT} />}
         {activeStep === 2 && <Camera side={DocumentSide.BACK} />}
         {activeStep === 3 && frontDocument && backDocument && (
-          <article className={styles.documents}>
-            <h4>Document detected</h4>
-            <img
-              src={`data:image/png;base64,${frontDocument}`}
-              alt="Front document"
-            />
-            <img
-              src={`data:image/png;base64,${backDocument}`}
-              alt="Back document"
-            />
+          <>
+            <article className={styles.documents}>
+              <div className={styles.documents__document}>
+                <h4>Front document detected</h4>
+                <img
+                  src={`data:image/png;base64,${frontDocument}`}
+                  alt="Front document"
+                />
+              </div>
+              <div className={styles.documents__document}>
+                <h4>Back document detected</h4>
+                <img
+                  src={`data:image/png;base64,${backDocument}`}
+                  alt="Back document"
+                />
+              </div>
+            </article>
             <Button text={<TbRefresh />} onClick={resetProcess} iconButton />
-          </article>
+          </>
         )}
       </section>
       {activeStep < 3 && (
