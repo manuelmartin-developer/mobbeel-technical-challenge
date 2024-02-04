@@ -30,4 +30,4 @@ jobs:
         run: npm run test
 
       - name: 🔬 E2E Test
-        run: npm run test:ci
+        run: npm run test:cy
