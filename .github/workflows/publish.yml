@@ -1,4 +1,4 @@
-name: format&lint&tests
+name: Format - Lint - Test
 
 on: push
 
