@@ -220,8 +220,12 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
 
   return (
     <section className={styles.camera} data-testid="camera">
-      <article className={styles.camera__selector}>
+      <article
+        className={styles.camera__selector}
+        data-testid="camera-selector"
+      >
         <Button
+          testId="camera-selector-file"
           text={<TbUpload />}
           onClick={() => {
             setDetectingMode(DetectingMode.FILE);
@@ -238,6 +242,7 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
           }
         />
         <Button
+          testId="camera-selector-photo"
           text={<TbCamera />}
           onClick={() => setDetectingMode(DetectingMode.PHOTO)}
           iconButton
@@ -251,6 +256,7 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
           }
         />
         <Button
+          testId="camera-selector-video"
           text={<TbVideo />}
           onClick={() => setDetectingMode(DetectingMode.VIDEO)}
           iconButton
@@ -266,6 +272,7 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
       {detectingMode && detectingMode !== DetectingMode.FILE && (
         <>
           <canvas
+            data-testid="camera-capture-canvas"
             ref={canvasRef}
             width={1280}
             height={720}
@@ -273,6 +280,7 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
             style={{ display: "none" }}
           ></canvas>
           <video
+            data-testid="camera-video"
             style={{
               display:
                 (activeStep === 1 && !frontDocument) ||
@@ -290,6 +298,7 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
       )}
       {activeStep === 1 && frontDocument && (
         <img
+          data-testid="detected-front-document"
           src={`data:image/png;base64,${frontDocument}`}
           alt="Front document"
           width="100%"
@@ -298,6 +307,7 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
       )}
       {activeStep === 2 && backDocument && (
         <img
+          data-testid="detected-back-document"
           src={`data:image/png;base64,${backDocument}`}
           alt="Back document"
           width="100%"
@@ -309,6 +319,7 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
           detectingMode !== DetectingMode.FILE &&
           !videoRef.current?.paused && (
             <Button
+              testId="camera-capture"
               text={<TbCapture />}
               onClick={() => {
                 detectingMode === DetectingMode.VIDEO
@@ -322,6 +333,7 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
         {((activeStep === 1 && frontDocument) ||
           (activeStep === 2 && backDocument)) && (
           <Button
+            testId="camera-refresh"
             text={<TbRefresh />}
             onClick={() => {
               activeStep === 1 ? setFrontDocument(null) : setBackDocument(null);
@@ -332,7 +344,8 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
         )}
       </article>
       <input
-        style={{ display: "none" }}
+        data-testid="camera-input"
+        className={styles.camera__input}
         ref={inputRef}
         type="file"
         accept="image/*"

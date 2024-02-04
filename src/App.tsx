@@ -8,7 +8,7 @@ import styles from "./App.module.scss";
 
 import Layout from "./components/layout/Layout";
 import Stepper from "./components/stepper/Stepper";
-import Camera from "./components/media/Camera";
+import Camera from "./components/camera/Camera";
 import Button from "./components/button/Button";
 import { useStepperStore } from "./store/stepper.store";
 import { TbRefresh } from "react-icons/tb";
@@ -86,7 +86,6 @@ const App = () => {
       description: (
         <>
           <h4>You have completed the process</h4>
-          <p>Your document has been scanned successfully</p>
           <p>
             Check the images below and if something is wrong, you can go click
             on retake button to start the process again
@@ -132,7 +131,7 @@ const App = () => {
     <Layout>
       <Stepper>
         {steps.map((step) => (
-          <article key={step.step}>
+          <article key={step.step} data-testid={`step-${step.step}`}>
             <div>{step.title}</div>
           </article>
         ))}

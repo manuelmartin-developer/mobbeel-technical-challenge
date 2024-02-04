@@ -72,6 +72,16 @@ interface ButtonProps {
    *
    * */
   selected?: boolean;
+
+  /**
+   * The test id of the button
+   * @type {string}
+   * @memberof ButtonProps
+   * @example
+   * testId="button"
+   * @default button
+   * */
+  testId?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -82,10 +92,11 @@ const Button: React.FC<ButtonProps> = ({
   width,
   height,
   selected,
+  testId = "button",
 }) => {
   return (
     <button
-      data-testid="button"
+      data-testid={testId}
       className={`${styles.button} ${disabled ? styles.button_disabled : ""} ${iconButton ? styles.button_icon : ""} ${selected ? styles.button_selected : ""}
       `}
       role="button"
