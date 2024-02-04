@@ -219,7 +219,7 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
   }, []);
 
   return (
-    <section className={styles.camera}>
+    <section className={styles.camera} data-testid="camera">
       <article className={styles.camera__selector}>
         <Button
           text={<TbUpload />}

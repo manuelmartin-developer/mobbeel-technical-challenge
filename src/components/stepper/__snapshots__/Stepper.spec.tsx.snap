@@ -1,0 +1,24 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Stepper > matches snapshot 1`] = `
+<DocumentFragment>
+  <section
+    class="_stepper_464a67"
+    data-testid="stepper"
+  >
+    <div
+      class="_stepper__line_464a67"
+    />
+    <div
+      class="_stepper__step_464a67 _stepper__step_active_464a67  "
+    >
+      Step 1
+    </div>
+    <div
+      class="_stepper__step_464a67   _stepper__step_disabled_464a67"
+    >
+      Step 2
+    </div>
+  </section>
+</DocumentFragment>
+`;

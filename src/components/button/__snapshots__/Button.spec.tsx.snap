@@ -1,0 +1,94 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Button > matches snapshot 1`] = `
+<DocumentFragment>
+  <button
+    class="_button_a9a5cd   
+      "
+    data-testid="button"
+    role="button"
+  >
+    <span>
+      Button
+    </span>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button > matches snapshot with disabled 1`] = `
+<DocumentFragment>
+  <button
+    aria-disabled="true"
+    class="_button_a9a5cd _button_disabled_a9a5cd  
+      "
+    data-testid="button"
+    role="button"
+  >
+    <span>
+      Button
+    </span>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button > matches snapshot with height 1`] = `
+<DocumentFragment>
+  <button
+    class="_button_a9a5cd   
+      "
+    data-testid="button"
+    role="button"
+    style="height: 100px;"
+  >
+    <span>
+      Button
+    </span>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button > matches snapshot with iconButton 1`] = `
+<DocumentFragment>
+  <button
+    class="_button_a9a5cd  _button_icon_a9a5cd 
+      "
+    data-testid="button"
+    role="button"
+  >
+    <span>
+      Button
+    </span>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button > matches snapshot with selected 1`] = `
+<DocumentFragment>
+  <button
+    class="_button_a9a5cd   _button_selected_a9a5cd
+      "
+    data-testid="button"
+    role="button"
+  >
+    <span>
+      Button
+    </span>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button > matches snapshot with width 1`] = `
+<DocumentFragment>
+  <button
+    class="_button_a9a5cd   
+      "
+    data-testid="button"
+    role="button"
+    style="width: 100px;"
+  >
+    <span>
+      Button
+    </span>
+  </button>
+</DocumentFragment>
+`;

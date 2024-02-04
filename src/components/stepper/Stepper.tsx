@@ -23,7 +23,7 @@ const Stepper: React.FC<StepperProps> = ({ children }) => {
   // Store states
   const { activeStep } = useStepperStore();
   return (
-    <section className={styles.stepper}>
+    <section className={styles.stepper} data-testid="stepper">
       <div className={styles.stepper__line}></div>
       {React.Children.map(children, (child, index) => {
         return React.cloneElement(child as React.ReactElement, {

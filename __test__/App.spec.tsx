@@ -36,4 +36,14 @@ describe("App", () => {
       screen.getByText("Welcome to the document scanner app"),
     ).toBeInTheDocument();
   });
+
+  it("renders Stepper component", () => {
+    render(<App />);
+    expect(screen.getByTestId("stepper")).toBeInTheDocument();
+  });
+
+  it("matches snapshot", () => {
+    const { asFragment } = render(<App />);
+    expect(asFragment()).toMatchSnapshot();
+  });
 });
