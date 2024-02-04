@@ -29,5 +29,5 @@ jobs:
       - name: 🧪 Unit Tests
         run: npm run test
 
-      - name E2E Test
-        run npm run test:ci
+      - name: 🔬 E2E Test
+        run: npm run test:ci
