@@ -46,7 +46,7 @@ describe("Switch Theme", () => {
     cy.getAllLocalStorage().then((result) => {
       console.log(result);
       expect(result).to.deep.equal({
-        "http://localhost:5173": {
+        "http://localhost:3000": {
           theme: "light",
         },
       });

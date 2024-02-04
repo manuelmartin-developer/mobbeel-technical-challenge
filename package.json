@@ -9,7 +9,7 @@
     "build": "tsc && vite build",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "test:cy": "start-server-and-test dev http://localhost:5173 cy:run",
+    "test:cy": "start-server-and-test dev http://localhost:3000 cy:run",
     "format": "prettier --write --parser typescript '**/*.{ts,tsx}'",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
