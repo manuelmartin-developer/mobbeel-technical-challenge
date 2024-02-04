@@ -220,55 +220,40 @@ const Camera: React.FC<CameraProps> = ({ side }) => {
 
   return (
     <section className={styles.camera} data-testid="camera">
-      <article
-        className={styles.camera__selector}
-        data-testid="camera-selector"
-      >
-        <Button
-          testId="camera-selector-file"
-          text={<TbUpload />}
-          onClick={() => {
-            setDetectingMode(DetectingMode.FILE);
-            inputRef.current!.click();
-          }}
-          iconButton
-          selected={detectingMode === DetectingMode.FILE}
-          disabled={
-            (activeStep === 1 && frontDocument) ||
-            (activeStep === 2 && backDocument) ||
-            !isCameraAvailable
-              ? true
-              : false
-          }
-        />
-        <Button
-          testId="camera-selector-photo"
-          text={<TbCamera />}
-          onClick={() => setDetectingMode(DetectingMode.PHOTO)}
-          iconButton
-          selected={detectingMode === DetectingMode.PHOTO}
-          disabled={
-            (activeStep === 1 && frontDocument) ||
-            (activeStep === 2 && backDocument) ||
-            !isCameraAvailable
-              ? true
-              : false
-          }
-        />
-        <Button
-          testId="camera-selector-video"
-          text={<TbVideo />}
-          onClick={() => setDetectingMode(DetectingMode.VIDEO)}
-          iconButton
-          selected={detectingMode === DetectingMode.VIDEO}
-          disabled={
-            (activeStep === 1 && frontDocument) ||
-            (activeStep === 2 && backDocument)
-              ? true
-              : false
-          }
-        />
-      </article>
+      {((activeStep === 1 && !frontDocument) ||
+        (activeStep === 2 && !backDocument)) && (
+        <article
+          className={styles.camera__selector}
+          data-testid="camera-selector"
+        >
+          <Button
+            testId="camera-selector-file"
+            text={<TbUpload />}
+            onClick={() => {
+              setDetectingMode(DetectingMode.FILE);
+              inputRef.current!.click();
+            }}
+            iconButton
+            selected={detectingMode === DetectingMode.FILE}
+          />
+          <Button
+            testId="camera-selector-photo"
+            text={<TbCamera />}
+            onClick={() => setDetectingMode(DetectingMode.PHOTO)}
+            iconButton
+            selected={detectingMode === DetectingMode.PHOTO}
+            disabled={!isCameraAvailable}
+          />
+          <Button
+            testId="camera-selector-video"
+            text={<TbVideo />}
+            onClick={() => setDetectingMode(DetectingMode.VIDEO)}
+            iconButton
+            selected={detectingMode === DetectingMode.VIDEO}
+            disabled={!isCameraAvailable}
+          />
+        </article>
+      )}
       {detectingMode && detectingMode !== DetectingMode.FILE && (
         <>
           <canvas
