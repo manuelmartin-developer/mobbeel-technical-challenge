@@ -10,4 +10,8 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: "./setupTests.ts",
   },
+  preview: {
+    port: 8083,
+    strictPort: true,
+  },
 });
