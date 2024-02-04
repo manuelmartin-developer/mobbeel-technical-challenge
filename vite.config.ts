@@ -11,7 +11,7 @@ export default defineConfig({
     setupFiles: "./setupTests.ts",
   },
   preview: {
-    port: 8083,
+    port: 3000,
     strictPort: true,
   },
 });
