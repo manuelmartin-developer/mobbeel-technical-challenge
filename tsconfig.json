@@ -19,6 +19,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+
+    /* Cypress */
     "types": ["cypress", "cypress-file-upload"],
   },
   "include": ["src", "__test__"],
