@@ -8,7 +8,7 @@ import styles from "./App.module.scss";
 
 import Layout from "./components/layout/Layout";
 import Stepper from "./components/stepper/Stepper";
-import Camera from "./components/media/Camera";
+import Camera from "./components/camera/Camera";
 import Button from "./components/button/Button";
 import { useStepperStore } from "./store/stepper.store";
 import { TbRefresh } from "react-icons/tb";
@@ -132,7 +132,7 @@ const App = () => {
     <Layout>
       <Stepper>
         {steps.map((step) => (
-          <article key={step.step}>
+          <article key={step.step} data-testid={`step-${step.step}`}>
             <div>{step.title}</div>
           </article>
         ))}

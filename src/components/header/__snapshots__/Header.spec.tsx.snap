@@ -9,11 +9,13 @@ exports[`Header > matches snapshot 1`] = `
     <img
       alt="MobbScan"
       class="_header__logo_accb48"
+      data-testid="logo"
       src="/assets/mobbeel-logo.png"
       width="80"
     />
     <h5
       class="_header__title_accb48"
+      data-testid="title"
     >
       Technical Challenge
     </h5>
@@ -81,11 +83,13 @@ exports[`Header > matches snapshot with dark theme 1`] = `
     <img
       alt="MobbScan"
       class="_header__logo_accb48"
+      data-testid="logo"
       src="/assets/mobbeel-logo.png"
       width="80"
     />
     <h5
       class="_header__title_accb48"
+      data-testid="title"
     >
       Technical Challenge
     </h5>
@@ -153,11 +157,13 @@ exports[`Header > matches snapshot with light theme 1`] = `
     <img
       alt="MobbScan"
       class="_header__logo_accb48"
+      data-testid="logo"
       src="/assets/mobbeel-logo.png"
       width="80"
     />
     <h5
       class="_header__title_accb48"
+      data-testid="title"
     >
       Technical Challenge
     </h5>
