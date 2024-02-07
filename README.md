@@ -31,13 +31,19 @@ VITE_BASE_URL=https://endpoint.example.com
 
 Replace `https://endpoint.example.com` with the URL of the API endpoint.
 
-### 4. Run the project
+### 4. Build the project
 
 ```bash
-npm preview
+npm run build
 ```
 
-### 5. Open the browser
+### 5. Run the project
+
+```bash
+npm run preview
+```
+
+### 6. Open the browser
 
 Open the browser and go to `http://localhost:3000`.
 
